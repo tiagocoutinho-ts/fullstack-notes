@@ -28,6 +28,14 @@ route.post("/create-your-account", async (req, res) => {
       message: "Username, email and password are required."
     })
 
+  const useExists = await User.findOne({ email })
+  if (useExists) {
+    return res.status(400).json({
+      sucess: false,
+      message: "This email address is already in use."
+    })
+  }
+
   try {
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
