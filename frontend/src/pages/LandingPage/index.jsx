@@ -1,17 +1,40 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NavBar } from "../../components/NavBar";
+import { api } from "../../../api/axios";
 
 export function LandingPage() {
 
+  const navigate = useNavigate()
   useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const token = localStorage.getItem("@NoteSlate:token")
+        const { data } = await api.get("/validate-token", {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        if(data.valid) {
+          navigate("/workspace")
+        }
+
+      } catch (err) {
+        if (err.reponse?.status === 401) {
+          localStorage.removeItem("@NoteSlate:token")
+          navigate("/create-your-account")
+        }
+      }
+    }
+    checkAuth()
     document.title = `NoteSlate`;
-  }, [])
+
+  }, [navigate])
 
   return (
     <div className="min-h-screen bg-white font-sans">
       <nav className="container mx-auto px-6 py-6 flex justify-between items-center">
-      <NavBar />
+        <NavBar />
         <div className="space-x-4">
           <Link to={"/login"} className="text-slate-600 font-medium hover:text-slate-900 transition-colors">Entrar</Link>
           <Link to={"/create-your-account"} className="bg-slate-600 hover:bg-slate-700 text-white px-5 py-2 rounded-full font-medium transition-all shadow-md shadow-slate-200">

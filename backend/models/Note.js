@@ -8,7 +8,6 @@ const NoteSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true,
-    unique: true
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
