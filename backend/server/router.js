@@ -6,17 +6,45 @@ import User from "../models/User.js"
 export const route = express.Router()
 
 route.post("/login", async (req, res) => {
-  const { email, password } = req.body
-  if (!email || !password) return res.status(400).json({ sucess: false, message: "Email and password are required." })
+  try {
+    const { email, password } = req.body
+    if (!email || !password) return res.status(400).json(
+      {
+        sucess: false,
+        message: "Email and password are required."
+      })
 
-  const user = await User.findOne({ email })
+    const user = await User.findOne({ email })
 
-  const match = await bcrypt.compare(password, user.password)
-  if (match) {
+    if (!user) {
+      return res.status(404).json(
+        {
+          sucess: false,
+          message: "This email address is not registered."
+        })
+    }
+
+    const match = user ? await bcrypt.compare(password, user.password) : false
+
+    if (!user || !match) {
+      return res.status(401).json(
+        {
+          success: false,
+          message: "Incorrect email address or password."
+        });
+    }
+
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
-    return res.status(200).json({ sucess: true, token, user })
-  } else {
-    return res.status(500).json({ sucess: false, message: "Invalid password." })
+    return res.status(200).json(
+      {
+        sucess: true,
+        user_name: user.name,
+        token,
+        user_id: user._id
+      })
+
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Internal server error." })
   }
 })
 

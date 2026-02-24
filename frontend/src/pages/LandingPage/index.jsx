@@ -40,7 +40,7 @@ export function LandingPage() {
       </header>
 
       <footer className="border-t border-slate-100 py-12 text-center text-slate-400 text-sm">
-        &copy; 2026 NoteSlate. Desenvolvido para projetos Fullstack de alta performance.
+        &copy; 2026 NoteSlate. Desenvolvido para alta performance.
       </footer>
     </div>
   )
