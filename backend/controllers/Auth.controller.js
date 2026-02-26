@@ -22,9 +22,9 @@ export async function login(req, res) {
         })
     }
 
-    const match = user ? await bcrypt.compare(password, user.password) : false
+    const isMatch = await bcrypt.compare(password, user.password)
 
-    if (!user || !match) {
+    if (!isMatch) {
       return res.status(401).json(
         {
           success: false,
@@ -65,13 +65,13 @@ export async function createAccount(req, res) {
   try {
     const salt = await bcrypt.genSalt(10)
     const hashedPassword = await bcrypt.hash(password, salt)
-    const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "7d" })
     const newUser = await User.create({
       name,
       email,
       password: hashedPassword,
     })
 
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: "7d" })
     res.status(201).json(
       {
         sucess: true,

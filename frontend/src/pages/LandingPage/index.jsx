@@ -6,6 +6,7 @@ import { api } from "../../../api/axios";
 export function LandingPage() {
 
   const navigate = useNavigate()
+  
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -29,7 +30,7 @@ export function LandingPage() {
     checkAuth()
     document.title = `NoteSlate`;
 
-  }, [navigate])
+  }, [])
 
   return (
     <div className="min-h-screen bg-white font-sans">

@@ -15,6 +15,8 @@ export function Authentication(req, res, next) {
     if (decode.id) {
       req.user = decode.id;
       return next();
+    } else {
+      return res.status(401).json({ success: false, message: "Invalid token payload" });
     }
 
   } catch (err) {
