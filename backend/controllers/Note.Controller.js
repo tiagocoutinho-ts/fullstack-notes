@@ -28,7 +28,22 @@ export async function create(req, res) {
   }
 }
 
-export async function showNotes(req, res) {
+export async function showOneNote(req, res) {
+  try {
+    const { id } = req.params
+
+    if (!id) {
+      return res.status(400).json({ sucess: false, message: "ID is required." })
+    }
+
+    const note = await Note.findById(id)
+    return res.json({ sucess: true, message: note })
+  } catch (err) {
+
+  }
+}
+
+export async function showAllNotes(req, res) {
   try {
     const userId = req.user
 
@@ -45,3 +60,21 @@ export async function showNotes(req, res) {
     });
   }
 }
+
+export async function update(req, res) {
+  try {
+    const { id, title, content } = req.body
+    if (!id || !title || !content) {
+      return res.json({
+        sucess: false,
+        message: "Id, title and content are required."
+      })
+    }
+
+    const updateNote = await Note.updateOne({ _id: id }, { $set: { title, content } })
+    return res.json({ message: "Note updated successfully!" })
+  } catch (err) {
+    return res.status(500).json({ error: "Error updating." })
+  }
+}
+

@@ -1,7 +1,9 @@
-export function ButtonCreateNote({ setModal }) {
+import { Link } from "react-router-dom"
+
+export function ButtonCreateNote() {
   return (
+    <Link to={"/create-note"}>
     <button
-      onClick={() => setModal(true)}
       className="fixed bottom-10 right-10 z-40 flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-6 py-4 rounded-full shadow-2xl shadow-slate-400 hover:scale-105 transition-all group"
     >
       <svg
@@ -16,6 +18,7 @@ export function ButtonCreateNote({ setModal }) {
       </svg>
       <span className="font-bold text-lg">Nova Nota</span>
     </button>
+    </Link>
   )
 }
 
