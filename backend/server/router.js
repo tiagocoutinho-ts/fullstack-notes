@@ -12,4 +12,4 @@ route.post("/note", Authentication, NoteController.create) // Create a new note.
 route.get("/note/:id", Authentication, NoteController.showOneNote) // Create a new note.
 route.get("/note", Authentication, NoteController.showAllNotes) // To search for a specific grade.
 route.put("/note/", Authentication, NoteController.update) // Edit the note's content.
-// route.delete("/note/:id") // Remove the note permanently.
+route.delete("/note/:id", Authentication, NoteController.deleteNote) // Remove the note permanently.

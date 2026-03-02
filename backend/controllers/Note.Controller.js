@@ -78,3 +78,17 @@ export async function update(req, res) {
   }
 }
 
+export async function deleteNote(req, res) {
+  try {
+    const { id } = req.params
+    const result = await Note.deleteOne({ _id: id })
+
+    if (result.deletedCount === 0) {
+      res.status(404).json({ sucess: false, message: "Note not found." })
+    }
+
+    res.status(200).json({ sucess: true, message: "Note successfully deleted!" })
+  } catch (err) {
+    res.status(500).json({ sucess: false, message: "Error deleting", error: err.message })
+  }
+}

@@ -44,7 +44,7 @@ export function EditNote() {
       await api.put(`/note/`, {
         id,
         title,
-        content 
+        content
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -53,6 +53,27 @@ export function EditNote() {
     } catch (err) {
       console.log("Erro ao salvar nota:", err);
       alert("Erro ao editar a nota. Tente novamente.");
+    }
+  }
+
+  async function handlerDeleteNote() {
+
+    const confirmDelete = confirm("Tem certeza que deseja exluir essa nota?")
+
+    if(!confirmDelete) {
+      return
+    }
+
+    try {
+      const token = localStorage.getItem("@NoteSlate:token");
+      await api.delete(`/note/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      navigate("/workspace");
+    } catch (err) {
+      console.log("Erro ao deletar nota:", err);
+      alert("Erro ao deletar a nota. Tente novamente.");
     }
   }
 
@@ -69,6 +90,14 @@ export function EditNote() {
             className="text-slate-400 hover:text-slate-600 font-medium transition-colors"
           >
             ← Voltar
+          </button>
+
+          <button
+            onClick={handlerDeleteNote}
+            type="submit"
+            className="bg-red-600 text-white px-8 py-2.5 rounded-xl font-bold hover:bg-red-800 transition-all shadow-md active:scale-95"
+          >
+            Excluir
           </button>
 
           <button
