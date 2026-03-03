@@ -13,13 +13,15 @@ export function SignIn() {
 
   async function handlerForm(e) {
     e.preventDefault()
-    
+
     try {
       const formData = new FormData(e.target)
       const userData = Object.fromEntries(formData);
-      const { data } = await api.post("/login", userData)
-      localStorage.setItem("@NoteSlate:token", data.token)
-      navigate("/workspace")
+      const { token } = await api.post("/login", userData)
+      if (token) {
+        localStorage.setItem("@NoteSlate:token", token)
+        navigate("/workspace")
+      }
     } catch (err) {
       console.log(err)
     }
