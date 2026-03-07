@@ -14,6 +14,8 @@ export function WorkSpace() {
   useEffect(() => {
     async function getAllNotes() {
 
+      const token = localStorage.getItem("@NoteSlate:token")
+
       if (!token) {
         navigate("/");
         return;
@@ -21,7 +23,6 @@ export function WorkSpace() {
 
       try {
         setIsLoading(true)
-        const token = localStorage.getItem("@NoteSlate:token")
         const { data } = await api.get("/note", {
           headers: {
             Authorization: `Bearer ${token}`
@@ -30,10 +31,12 @@ export function WorkSpace() {
         if (data.success) {
           setNotes(data.notes)
         }
-        console.log(notes)
         document.title = `NoteSlate | WorkSpace`;
       } catch (err) {
-        console.log(err)
+        if (err.response?.status === 401 || err.response?.status === 500) {
+        localStorage.removeItem("@NoteSlate:token");
+        navigate("/");
+      }
       } finally {
         setIsLoading(false)
       }
@@ -44,7 +47,7 @@ export function WorkSpace() {
 
   function handlerLogout() {
     const confirmLogOut = confirm("Você confirma que deseja sair da sua conta?")
-    if(!confirmLogOut) {
+    if (!confirmLogOut) {
       return
     }
 
@@ -66,8 +69,8 @@ export function WorkSpace() {
             }
           </div>
           <button
-          onClick={handlerLogout} 
-          className="bg-slate-600 text-white px-8 py-2 rounded-4xl font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95">Sair</button>
+            onClick={handlerLogout}
+            className="bg-slate-600 text-white px-8 py-2 rounded-4xl font-bold hover:bg-slate-800 transition-all shadow-md active:scale-95">Sair</button>
         </div>
 
         <ButtonCreateNote />

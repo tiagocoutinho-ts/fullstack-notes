@@ -35,7 +35,7 @@ export function LandingPage() {
   return (
     <div className="min-h-screen bg-white font-sans">
       <nav className="container mx-auto px-4 py-4 flex flex-row justify-between items-center sm:px-6 sm:py-6">
-        <div className="flex-shrink-0">
+        <div className="shrink-0">
           <NavBar />
         </div>
         <div className="flex items-center gap-2 sm:gap-4 ml-2">
