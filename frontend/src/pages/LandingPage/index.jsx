@@ -6,7 +6,7 @@ import { api } from "../../../api/axios";
 export function LandingPage() {
 
   const navigate = useNavigate()
-  
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
@@ -16,7 +16,7 @@ export function LandingPage() {
             Authorization: `Bearer ${token}`
           }
         })
-        if(data.valid) {
+        if (data.valid) {
           navigate("/workspace")
         }
 
@@ -34,12 +34,23 @@ export function LandingPage() {
 
   return (
     <div className="min-h-screen bg-white font-sans">
-      <nav className="container mx-auto px-6 py-6 flex justify-between items-center">
-        <NavBar />
-        <div className="space-x-4">
-          <Link to={"/login"} className="text-slate-600 font-medium hover:text-slate-900 transition-colors">Entrar</Link>
-          <Link to={"/create-your-account"} className="bg-slate-600 hover:bg-slate-700 text-white px-5 py-2 rounded-full font-medium transition-all shadow-md shadow-slate-200">
-            Criar conta grátis
+      <nav className="container mx-auto px-4 py-4 flex flex-row justify-between items-center sm:px-6 sm:py-6">
+        <div className="flex-shrink-0">
+          <NavBar />
+        </div>
+        <div className="flex items-center gap-2 sm:gap-4 ml-2">
+          <Link
+            to={"/login"}
+            className="text-slate-600 font-medium hover:text-slate-900 transition-colors text-xs sm:text-base whitespace-nowrap"
+          >
+            Entrar
+          </Link>
+
+          <Link
+            to={"/create-your-account"}
+            className="bg-slate-600 hover:bg-slate-700 text-white px-3 py-2 rounded-full font-medium transition-all shadow-md shadow-slate-200 text-xs sm:text-base whitespace-nowrap"
+          >
+            Criar conta <span className="hidden xs:inline">grátis</span>
           </Link>
         </div>
       </nav>

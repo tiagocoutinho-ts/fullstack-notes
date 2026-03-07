@@ -17,7 +17,8 @@ export function SignIn() {
     try {
       const formData = new FormData(e.target)
       const userData = Object.fromEntries(formData);
-      const { token } = await api.post("/login", userData)
+      const response = await api.post("/login", userData)
+      const { token } = response.data
       if (token) {
         localStorage.setItem("@NoteSlate:token", token)
         navigate("/workspace")

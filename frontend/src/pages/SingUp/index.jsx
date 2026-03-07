@@ -16,8 +16,8 @@ export function SignUp() {
       const formData = new FormData(e.target)
       const userData = Object.fromEntries(formData);
 
-      const { token } = await api.post("/create-your-account", userData)
-
+      const response = await api.post("/create-your-account", userData)
+      const { token } = response.data
       if (token) {
         localStorage.setItem("@NoteSlate:token", data.token)
         navigate("/workspace")

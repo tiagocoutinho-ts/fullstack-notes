@@ -6,7 +6,9 @@ export function NavBar() {
     <Link to={"/"}>
       <div className="flex items-center gap-2">
         <img className="w-8" src={IconNote} alt="icon-note-slate" />
-        <span className="text-2xl font-bold text-slate-800 tracking-tight">NoteSlate</span>
+        <span className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight hidden min-[450px]:block">
+          NoteSlate
+        </span>
       </div>
     </Link>
   )
