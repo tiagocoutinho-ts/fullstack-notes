@@ -18,7 +18,7 @@ export function EditNote() {
             Authorization: `Bearer ${token}`
           }
         })
-        if (data.sucess) {
+        if (data.success) {
           setTitle(data.message.title)
           setContent(data.message.content)
         }
@@ -94,7 +94,7 @@ export function EditNote() {
 
           <button
             onClick={handlerDeleteNote}
-            type="submit"
+            type="button"
             className="bg-red-600 text-white px-8 py-2.5 rounded-xl font-bold hover:bg-red-800 transition-all shadow-md active:scale-95"
           >
             Excluir
