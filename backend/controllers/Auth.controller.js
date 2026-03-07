@@ -8,7 +8,7 @@ export async function login(req, res) {
     const { email, password } = req.body
     if (!email || !password) return res.status(400).json(
       {
-        sucess: false,
+        success: false,
         message: "Email and password are required."
       })
 
@@ -17,7 +17,7 @@ export async function login(req, res) {
     if (!user) {
       return res.status(404).json(
         {
-          sucess: false,
+          success: false,
           message: "This email address is not registered."
         })
     }
@@ -28,21 +28,21 @@ export async function login(req, res) {
       return res.status(401).json(
         {
           success: false,
-          message: "Incorrect email address or password."
+          message: "Erro login."
         });
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" })
     return res.status(200).json(
       {
-        sucess: true,
+        success: true,
         user_name: user.name,
         token,
         user_id: user._id
       })
 
   } catch (err) {
-    res.status(500).json({ success: false, message: "Internal server error." })
+    return res.status(500).json({ success: false, message: "Internal server error." })
   }
 }
 
@@ -50,14 +50,14 @@ export async function createAccount(req, res) {
   const { name, email, password } = req.body
   if (!name || !email || !password) return res.status(400).json(
     {
-      sucess: false,
+      success: false,
       message: "Username, email and password are required."
     })
 
   const useExists = await User.findOne({ email })
   if (useExists) {
     return res.status(400).json({
-      sucess: false,
+      success: false,
       message: "This email address is already in use."
     })
   }
@@ -74,7 +74,7 @@ export async function createAccount(req, res) {
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: "7d" })
     res.status(201).json(
       {
-        sucess: true,
+        success: true,
         message: "Account created successfully!",
         id: newUser._id,
         token
@@ -83,7 +83,7 @@ export async function createAccount(req, res) {
   } catch (err) {
     res.status(500).json(
       {
-        sucess: false,
+        success: false,
         message: "Failed to create user account."
       })
   }

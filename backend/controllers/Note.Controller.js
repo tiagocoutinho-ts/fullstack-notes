@@ -10,7 +10,7 @@ export async function create(req, res) {
 
     if (!title || !content) {
       return res.json({
-        sucess: false,
+        success: false,
         message: "Title and content are required."
       })
     }
@@ -33,11 +33,11 @@ export async function showOneNote(req, res) {
     const { id } = req.params
 
     if (!id) {
-      return res.status(400).json({ sucess: false, message: "ID is required." })
+      return res.status(400).json({ success: false, message: "ID is required." })
     }
 
     const note = await Note.findById(id)
-    return res.json({ sucess: true, message: note })
+    return res.json({ success: true, message: note })
   } catch (err) {
 
   }
