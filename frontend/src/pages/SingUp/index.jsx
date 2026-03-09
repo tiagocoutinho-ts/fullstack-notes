@@ -19,12 +19,12 @@ export function SignUp() {
       const response = await api.post("/create-your-account", userData)
       const { token } = response.data
       if (token) {
-        localStorage.setItem("@NoteSlate:token", data.token)
+        localStorage.setItem("@NoteSlate:token", token)
         navigate("/workspace")
       }
 
     } catch (err) {
-      console.log(err)
+      alert("Erro na criação de conta.")
     }
   }
 
